@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Person Details</title>
+</head>
+<body>
+<p> <strong><span th:text="${person.name}">Name</span></strong>,
+    <strong><span th:text="${person.year}">Year</span></strong>
+</p>
+<div th:if="${not #lists.isEmpty(person.books)}">
+    <br/>
+    <hr/>
+    <h3>Книги:</h3>
+    <ul>
+        <li th:each="book : ${person.books}">
+            <span th:text="${book.name_of_book}">Name of Book</span>,
+            <span th:text="${book.author}">Author</span>,
+            <span th:text="${book.year_of_creation}">Year of Creation</span>
+        </li>
+    </ul>
+</div>
+<div th:unless="${not #lists.isEmpty(person.books)}">
+    <p>Человек пока не взял ни одной книги</p>
+</div>
+
+<br/>
+<hr/>
+<p>
+    <button th:onclick="|window.location.href='@{/people/{id}/edit(id=${person.person_id})}'|">Редактировать</button>
+</p>
+<p>
+<form th:action="@{/people/{id}(id=${person.person_id})}" method="post">
+    <input type="hidden" name="_method" value="delete"/>
+    <input type="submit" value="Удалить"/>
+</form>
+</p>
+
+
+<a href="/people">Назад к списку</a>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Persons</title>
+</head>
+<body>
+<h1>Люди</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ФИО</th>
+        <th>Год рождения</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="person : ${persons}">
+        <td><a th:href="@{/people/{id}(id=${person.person_id})}" th:text="${person.name}">Name</a></td>
+        <td th:text="${person.year}">Year</td>
+    </tr>
+    </tbody>
+</table>
+<br/>
+<hr/>
+<a href="/people/new"/>Добавить человека</a>
+<hr/>
+</body>
+</html>

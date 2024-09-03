@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Book Details</title>
+</head>
+<body>
+<p> <strong><span th:text="${book.name_of_book}">Name</span></strong>,
+    <strong><span th:text="${book.author}">Author</span></strong>,
+    <strong><span th:text="${book.year_of_creation}">Year</span></strong>
+</p>
+<div th:if="${book.owner != null}">
+    <p>Эта книга сейчас у: <span th:text="${book.owner.name}">Name</span></p>
+    <form th:action="@{/books/{id}/release(id=${book.book_id})}" method="post">
+        <input type="hidden" name="_method" value="put"/>
+        <button type="submit">Освободить книгу</button>
+    </form>
+</div>
+<div th:unless="${book.owner != null}">
+    <p>Эта книга свободна, кому назначить её?</p>
+    <p>Выберите человека:</p>
+    <form th:action="@{/books/{id}/assign(id=${book.book_id})}" method="post">
+        <label>
+            <select name="person_id">
+                <option th:each="person : ${people}" th:value="${person.person_id}" th:text="${person.name}"></option>
+            </select>
+        </label>
+        <button type="submit">Назначить человека</button>
+    </form>
+</div>
+
+<br/>
+<hr/>
+<p>
+    <button th:onclick="|window.location.href='@{/books/{id}/edit(id=${book.book_id})}'|">Редактировать</button>
+</p>
+<p>
+<form th:action="@{/books/{id}(id=${book.book_id})}" method="post">
+    <input type="hidden" name="_method" value="delete"/>
+    <input type="submit" value="Удалить"/>
+</form>
+</p>
+
+
+<a href="/books">Назад к списку</a>
+</body>
+</html>
